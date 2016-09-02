@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,12 +44,12 @@ public class FoldingCell extends RelativeLayout {
 
     // default values
     private final int DEF_ANIMATION_DURATION = 1000;
-    private final int DEF_BACK_SIDE_COLOR = Color.GRAY;
+    private final int DEF_BACK_SIDE_DRAWABLE = R.drawable.default_backside_drawable;
     private final int DEF_ADDITIONAL_FLIPS = 0;
 
     // current settings
     private int mAnimationDuration = DEF_ANIMATION_DURATION;
-    private int mBackSideColor = DEF_BACK_SIDE_COLOR;
+    private Drawable mBackSideDrawable;
     private int mAdditionalFlipsCount = DEF_ADDITIONAL_FLIPS;
 
     public FoldingCell(Context context, AttributeSet attrs) {
@@ -77,13 +78,13 @@ public class FoldingCell extends RelativeLayout {
      * Initializes folding cell programmatically with custom settings
      *
      * @param animationDuration    animation duration, default is 1000
-     * @param backSideColor        color of back side, default is android.graphics.Color.GREY
-     *                             (0xFF888888)
+     * @param backSideDrawable     drawable for backside, drawable from default is android.graphics.Color.GREY
+     *                             (0xFF888888). Stored in R.drawable.default_backside_drawable
      * @param additionalFlipsCount count of additional flips (after first one), set 0 for auto
      */
-    public void initialize(int animationDuration, int backSideColor, int additionalFlipsCount) {
+    public void initialize(int animationDuration, int backSideDrawable, int additionalFlipsCount) {
         this.mAnimationDuration = animationDuration;
-        this.mBackSideColor = backSideColor;
+        this.mBackSideDrawable=getResources().getDrawable(backSideDrawable);
         this.mAdditionalFlipsCount = additionalFlipsCount;
     }
 
@@ -304,7 +305,7 @@ public class FoldingCell extends RelativeLayout {
      */
     protected ImageView createBackSideView(int height) {
         ImageView imageView = new ImageView(getContext());
-        imageView.setBackgroundColor(mBackSideColor);
+        imageView.setBackground(mBackSideDrawable);
         imageView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         return imageView;
     }
@@ -510,10 +511,14 @@ public class FoldingCell extends RelativeLayout {
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FoldingCell, 0, 0);
         try {
             this.mAnimationDuration = array.getInt(R.styleable.FoldingCell_animationDuration, DEF_ANIMATION_DURATION);
-            this.mBackSideColor = array.getColor(R.styleable.FoldingCell_backSideColor, DEF_BACK_SIDE_COLOR);
+            this.mBackSideDrawable = array.getDrawable(R.styleable.FoldingCell_backSideDrawable);
             this.mAdditionalFlipsCount = array.getInt(R.styleable.FoldingCell_additionalFlipsCount, DEF_ADDITIONAL_FLIPS);
         } finally {
             array.recycle();
+        }
+
+        if(this.mBackSideDrawable==null){
+            this.mBackSideDrawable=getResources().getDrawable(DEF_BACK_SIDE_DRAWABLE);
         }
     }
 

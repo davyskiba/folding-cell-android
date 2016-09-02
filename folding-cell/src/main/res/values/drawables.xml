@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="default_backside_color">#FF888888</color>
+    <drawable name="default_backside_drawable">@color/default_backside_color</drawable>
+</resources>
