@@ -60,7 +60,7 @@ public class FoldingCell extends RelativeLayout {
 
     public FoldingCell(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        foldAnimationListeners=new LinkedList<>();
+        foldAnimationListeners = new LinkedList<>();
         initializeFromAttributes(context, attrs);
         this.setClipChildren(false);
         this.setClipToPadding(false);
@@ -68,7 +68,7 @@ public class FoldingCell extends RelativeLayout {
 
     public FoldingCell(Context context) {
         super(context);
-        foldAnimationListeners=new LinkedList<>();
+        foldAnimationListeners = new LinkedList<>();
         this.setClipChildren(false);
         this.setClipToPadding(false);
     }
@@ -77,7 +77,8 @@ public class FoldingCell extends RelativeLayout {
      * Initializes folding cell programmatically with custom settings
      *
      * @param animationDuration    animation duration, default is 1000
-     * @param backSideColor        color of back side, default is android.graphics.Color.GREY (0xFF888888)
+     * @param backSideColor        color of back side, default is android.graphics.Color.GREY
+     *                             (0xFF888888)
      * @param additionalFlipsCount count of additional flips (after first one), set 0 for auto
      */
     public void initialize(int animationDuration, int backSideColor, int additionalFlipsCount) {
@@ -89,8 +90,6 @@ public class FoldingCell extends RelativeLayout {
     public boolean isUnfolded() {
         return mUnfolded;
     }
-
-
 
     /**
      * Unfold cell with (or without) animation
@@ -530,7 +529,7 @@ public class FoldingCell extends RelativeLayout {
         if (titleView == null) return;
         contentView.setVisibility(GONE);
         titleView.setVisibility(VISIBLE);
-        measureView(titleView,this.getMeasuredWidth());
+        measureView(titleView, this.getMeasuredWidth());
         FoldingCell.this.mUnfolded = false;
         ViewGroup.LayoutParams layoutParams = this.getLayoutParams();
         layoutParams.height = titleView.getHeight();
@@ -551,7 +550,7 @@ public class FoldingCell extends RelativeLayout {
         contentView.setVisibility(VISIBLE);
         titleView.setVisibility(GONE);
         FoldingCell.this.mUnfolded = true;
-        measureView(contentView,this.getMeasuredWidth());
+        measureView(contentView, this.getMeasuredWidth());
         ViewGroup.LayoutParams layoutParams = this.getLayoutParams();
         layoutParams.height = contentView.getHeight();
         this.setLayoutParams(layoutParams);
@@ -565,13 +564,13 @@ public class FoldingCell extends RelativeLayout {
     }
 
 
-    void notifyFoldAnimationEndListeners(){
-        for(FoldAnimationListener foldAnimationListener : foldAnimationListeners){
+    void notifyFoldAnimationEndListeners() {
+        for (FoldAnimationListener foldAnimationListener : foldAnimationListeners) {
             foldAnimationListener.notify();
         }
     }
 
-    public void addFoldAnimationListener(FoldAnimationListener foldAnimationListener){
+    public void addFoldAnimationListener(FoldAnimationListener foldAnimationListener) {
         foldAnimationListeners.add(foldAnimationListener);
     }
 }
