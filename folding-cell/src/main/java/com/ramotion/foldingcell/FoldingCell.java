@@ -17,11 +17,13 @@ import android.widget.RelativeLayout;
 
 import com.ramotion.foldingcell.animations.AnimationEndListener;
 import com.ramotion.foldingcell.animations.FoldAnimation;
+import com.ramotion.foldingcell.animations.FoldAnimationListener;
 import com.ramotion.foldingcell.animations.HeightAnimation;
 import com.ramotion.foldingcell.views.FoldingCellView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -31,6 +33,9 @@ import java.util.List;
 public class FoldingCell extends RelativeLayout {
 
     private final String TAG = "folding-cell";
+
+    // fold animation listener
+    private List<FoldAnimationListener> foldAnimationListeners;
 
     // state variables
     private boolean mUnfolded;
@@ -55,6 +60,7 @@ public class FoldingCell extends RelativeLayout {
 
     public FoldingCell(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        foldAnimationListeners=new LinkedList<>();
         initializeFromAttributes(context, attrs);
         this.setClipChildren(false);
         this.setClipToPadding(false);
@@ -62,6 +68,7 @@ public class FoldingCell extends RelativeLayout {
 
     public FoldingCell(Context context) {
         super(context);
+        foldAnimationListeners=new LinkedList<>();
         this.setClipChildren(false);
         this.setClipToPadding(false);
     }
@@ -82,6 +89,8 @@ public class FoldingCell extends RelativeLayout {
     public boolean isUnfolded() {
         return mUnfolded;
     }
+
+
 
     /**
      * Unfold cell with (or without) animation
@@ -130,6 +139,7 @@ public class FoldingCell extends RelativeLayout {
                 FoldingCell.this.removeView(foldingLayout);
                 FoldingCell.this.mUnfolded = true;
                 FoldingCell.this.mAnimationInProgress = false;
+                notifyFoldAnimationEndListeners();
             }
         });
 
@@ -187,6 +197,7 @@ public class FoldingCell extends RelativeLayout {
                 FoldingCell.this.removeView(foldingLayout);
                 FoldingCell.this.mAnimationInProgress = false;
                 FoldingCell.this.mUnfolded = false;
+                notifyFoldAnimationEndListeners();
             }
         });
 
@@ -551,5 +562,16 @@ public class FoldingCell extends RelativeLayout {
         int specW = MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.EXACTLY);
         int specH = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         view.measure(specW, specH);
+    }
+
+
+    void notifyFoldAnimationEndListeners(){
+        for(FoldAnimationListener foldAnimationListener : foldAnimationListeners){
+            foldAnimationListener.notify();
+        }
+    }
+
+    public void addFoldAnimationListener(FoldAnimationListener foldAnimationListener){
+        foldAnimationListeners.add(foldAnimationListener);
     }
 }
