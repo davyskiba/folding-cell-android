@@ -1,10 +1,15 @@
 package com.ramotion.foldingcell;
 
+import com.ramotion.foldingcell.animations.AnimationEndListener;
+import com.ramotion.foldingcell.animations.FoldAnimation;
+import com.ramotion.foldingcell.animations.FoldAnimationListener;
+import com.ramotion.foldingcell.animations.HeightAnimation;
+import com.ramotion.foldingcell.views.FoldingCellView;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -15,12 +20,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
-import com.ramotion.foldingcell.animations.AnimationEndListener;
-import com.ramotion.foldingcell.animations.FoldAnimation;
-import com.ramotion.foldingcell.animations.FoldAnimationListener;
-import com.ramotion.foldingcell.animations.HeightAnimation;
-import com.ramotion.foldingcell.views.FoldingCellView;
 
 import java.util.ArrayList;
 import java.util.Collections;
