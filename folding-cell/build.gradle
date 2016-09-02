@@ -2,8 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'signing'
 apply plugin: 'com.bmuschko.nexus'
 apply plugin: "jacoco"
+apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'com.ramotion.foldingcell'
+group = 'com.github.davyskiba'
 version = '1.0.1'
 
 android {
