@@ -53,6 +53,7 @@ public class FoldingCell extends RelativeLayout {
 
     public FoldingCell(Context context, AttributeSet attrs) {
         super(context, attrs);
+        foldAnimationListeners = new LinkedList<>();
         initializeFromAttributes(context, attrs);
         this.setClipChildren(false);
         this.setClipToPadding(false);
