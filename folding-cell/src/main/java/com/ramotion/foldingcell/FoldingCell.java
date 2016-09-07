@@ -571,7 +571,7 @@ public class FoldingCell extends RelativeLayout {
 
     void notifyFoldAnimationEndListeners() {
         for (FoldAnimationListener foldAnimationListener : foldAnimationListeners) {
-            foldAnimationListener.notify();
+            foldAnimationListener.onFoldAnimationEnd();
         }
     }
 
